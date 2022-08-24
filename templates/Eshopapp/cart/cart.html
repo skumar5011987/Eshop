@@ -1,0 +1,65 @@
+{% extends 'Eshopapp/base.html' %}
+{% load static %}
+
+{% block msg %}
+
+{% endblock msg%}
+
+{% block content %}
+<div class="py-1 bg-info">
+  <div class="container">
+    <a class="text-white" href=" {% url 'home' %} ">Home /</a>
+    <a class="text-white" href=" {% url 'cartview' %} ">Cart </a>
+     </div>
+</div>
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">       
+        <div class="shadow  mb-5 bg-body rounded my-3 ">
+            <div class="card-body carditems" >
+               {% if cart %}
+               {% for item in cart %}
+                <div class="row product_data my-2 ">
+                    <div class="my-2 col-md-2">
+                        <img class="border border-success rounded" src="{{item.product.product_image.url}}" alt="{{item.product.name}}" width="70px", height="80px">
+                    </div>
+                    <div class="my-auto col-md-3">
+                        <h6>{{item.product.name}}</h6>
+                    </div>
+                    <div class="my-auto col-md-2">
+                        <h6>Rs: {{item.product.selling_price}}</h6>
+                    </div>
+                    <div class="my-auto col-md-3">
+                        <input type="hidden" class="prod_id"  value={{item.product.id}}>
+                        {% csrf_token %}
+                        {% if item.product.quantity >= item.product_qty %}
+                            <label for="Quantity">Quantity</label>
+                            <div class="input-group text-center md-3" style="width: 130px;">
+                                <button class="input-group-text decrement-btn update-quantity font-weight-bold">-</button>
+                                <input type="text" name="quantity" id="" class="form-control qty-input text-center border border-success rounded font-weight-bold mx-1" value="{{item.product_qty}}">
+                                <button class="input-group-text increment-btn update-quantity mr-1 font-weight-bold">+</button>
+                            </div>
+                        {% else %}
+                        <span>Status:</span>
+                        <h6 class="badge text-danger "> Out of Stock</h6>
+                        {% endif %}                        
+                    </div>
+                    <div class="col-md-2 my-auto">                                                                
+                        <button type='button' class="btn btn-danger delete-cart-item ">Remove<i class="fa-solid fa-trash-can ml-2"></i></button>
+                    </div>
+                </div><hr class="p-0 m-0"> 
+               {% endfor %}
+                
+               {% else %}
+                    <h4 class="text-center">Oops...Your Cart is Empty.</h4>
+               {% endif %}
+            </div>   
+            {% if cart %}
+            <a class="btn btn-success float-right col-sm-3 mt-3" href="{% url 'checkout' %}">Checkout</a>      
+            {% endif %}
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

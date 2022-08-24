@@ -1,0 +1,128 @@
+{% extends 'Eshopapp/base.html' %}
+{% load static %}
+
+{% block msg %}
+
+{% endblock msg%}
+
+{% block content %}
+<div class="py-1 bg-info">
+  <div class="container">
+    <a class="text-white" href=" {% url 'home' %} ">Home /</a>
+    <a class="text-white" href=" {% url 'cartview' %} ">Cart /</a>
+    <a class="text-white" href=" {% url 'checkout' %} ">Checkout </a>
+     </div>
+</div>
+
+<div class="container mt-4">
+    <form action="{% url 'placeorder' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card shadow mb-5 bg-body rounded my-3">
+                    <div class="card-body ">
+                        <h6>Bsic Detailes:-</h6><hr>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mt-1">
+                                <label class="m-0" for="">First Name:</label>
+                                <input type="text" class="form-control" name="fname" placeholder="Enter First Name" value="{{request.user.first_name}}" required>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                                <label class="m-0" for="">Last Name:</label>
+                                <input type="text" class="form-control" name="lname" placeholder="Enter Last Name"  value="{{request.user.last_name}}" required>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                                <label class="m-0" for="">Email Address:</label>
+                                <input type="text" class="form-control" name="email" placeholder="Enter Email" value="{{request.user.email}}" required>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                                <label class="m-0" for="">Mobile:</label>
+                                <input type="text" class="form-control" name="mobile" placeholder="Enter Mobile" value="{{userprofile.mobile}}" required>
+                            </div>
+                            <div class="col-md-12 mt-1">
+                                <label class="m-0" for="">Address:</label>
+                                <input  class="form-control" name="address" placeholder="Enter Address Here" value="{{userprofile.address}}" required>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                                <label class="m-0" for="">District:</label>
+                                <input type="text" class="form-control" name="district" placeholder="Enter Your District" value="{{userprofile.district}}" required>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                                <label class="m-0" for="">State:</label>
+                                <input type="text" class="form-control" name="state" placeholder="Enter State" value="{{userprofile.state}}" required>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                                <label class="m-0" for="">Country:</label>
+                                <input type="text" class="form-control" name="country" placeholder="Enter Country" value="{{userprofile.country}}"required>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                                <label class="m-0" for="">Pin Code</label>
+                                <input type="text" class="form-control" name="pincode" placeholder="Enter PIN Code" value="{{userprofile.pincode}}" required>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow mb-5 bg-body rounded my-3">
+                    <div class="card-body ">
+                        <h6>Order Summery:</h6>
+                        {% if cartitems %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th >Products</th>
+                                    <th >Quantity</th>
+                                    <th >Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in cartitems %}
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                        <div class="col-md-2">
+                                        <img class="border rounded" src="{{item.product.product_image.url}}" height="50px" width="50px" alt="Product Image"> 
+                                        </div>
+                                        <div class="col-md-10">
+                                            {{item.product.name}}
+                                        </div>
+                                    </div>
+                                    </td>
+                                    <td>{{item.product_qty}}</td>
+                                    <td>{{item.product.selling_price}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>                        
+                        </table>     
+                        <div class="bg-secondary border rounded text-white p-1">               
+                            <h6 class="fw-bold mx-2 ">Grand Total: 
+                                <span class="float-right ">Rs: {{total_price | stringformat:'d'}}</span>
+                            </h6>
+                        </div>
+                        <input type="hidden" name="payment_mode" value="COD">
+                        <div class="mt-1">
+                            <p  class="btn btn-success w-100 m-0">POD | Place Order</p>
+                        </div>
+                        <div class="mt-1">
+                            <button type="submit" class="btn btn-primary w-100 payWithRazorPay">Pay with Razorpay</button>
+                        </div>
+                        
+                        {% else %}
+                        <hr>
+                        <h4 class="text-center">Cart is empty.</h4>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+{% block scripts %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% endblock scripts %}

@@ -1,0 +1,71 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">E-Shop</a>   
+
+    <div class="search-bar">
+      <form class="d-flex">
+        <input class="form-control me-2 " id="searchproducts" type="search" placeholder="Search Products" >
+        <button class="btn btn-outline-success mx-2" type="submit"><i class="fa fa-search"></i></button>
+      </form>
+    </div>
+
+    <button class="navbar-toggler float-end" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon "></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+        <li class="nav-item ">
+          <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" aria-current="page" href="{% url 'home' %}" >Home</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link {% if request.resolver_match.url_name == 'collections' %}active{% endif %} " href="{% url 'collections' %}">Collections</a>
+        </li>
+        {% if not request.user.is_authenticated %}
+        <li class="nav-item ">
+          <a class="nav-link {% if request.resolver_match.url_name == 'user_registration' %}active{% endif %} " href="{% url 'user_registration' %}">Register</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link {% if request.resolver_match.url_name == 'user_login' %}active{% endif %} " href="{% url 'user_login' %}">Login</a>
+        </li>
+        {% else %}        
+        <li class="nav-item ">
+          <a class="nav-link {% if request.resolver_match.url_name == 'cartview' %}active{% endif %}" href="{% url 'cartview' %}"><i class="fa-solid fa-cart-arrow-down"></i></a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link {% if request.resolver_match.url_name == 'showwishlist' %}active{% endif %}" href="{% url 'showwishlist' %}"><i class="fa-regular fa-heart ml-2"></i></i></a>
+        </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-capitalize" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+            {{request.user}}
+          </a>
+          <div class="dropdown-menu">
+            <span style="font-family: 'Lora', serif;" class="dropdown-item text-center p-0 m-0" >Account</span>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item " href="#"><i class="fa-solid fa-key mr-2"></i>Change Password</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item " href="{% url 'myorders' %}"><i class="fa-solid fa-sort mr-2"></i>My Orders</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'user_logout' %}"><i class="fa-solid fa-right-from-bracket mr-2"></i>Logout</a>
+            <div class="dropdown-divider"></div>
+            <a style="font-family: 'Lora', serif;" class="dropdown-item " href="#"><i class="fa-solid fa-id-badge mr-2"></i>See Profile</a>
+          </div>
+        </li>        
+        {% endif %}
+        <li class="nav-item ">
+          <a class="nav-link " href="#">About</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link " href="#">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="https://wa.me/+917398291130?text=I'm%20interested%20in%20your%20car%20for%20sale" target="_blank">
+            <img src="{% static 'images/whatsapplogo.png' %}" width="20px" height="20px" alt="Whatsapp"/>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,52 @@
+{% extends 'Eshopapp/base.html' %}
+{% load static %}
+
+{% block msg %}
+
+{% endblock msg%}
+
+{% block content %}
+<div class="py-1 bg-info">
+  <div class="container">
+    <a class="text-white" href=" {% url 'home' %} ">Home /</a>
+    <a class="text-white" href="{% url 'showwishlist' %} ">Wishlist </a>
+     </div>
+</div>
+
+<div class="container ">
+    <div class="row">
+      <div class="col-md-12 ">       
+        <div class="shadow  mb-5 bg-body rounded my-3 ">
+            <div class="card-body  wishlistItems " >
+               {% if wishlist %}
+               {% for item in wishlist %}
+                <div class="row product_data my-2 ">
+                    <input type="hidden" value="{{item.product.id}}" class="prod_id">
+                    {% csrf_token %}
+                    <div class="my-2 col-md-2">
+                        <img class="border border-success rounded" src="{{item.product.product_image.url}}" alt="{{item.product.name}}" width="70px" height="80px">
+                    </div>
+                    <div class="my-auto col-md-3">
+                        <h6>{{item.product.name}}</h6>
+                    </div>
+                    <div class="my-auto col-md-3">
+                        <h6>Rs: {{item.product.selling_price}}</h6>
+                    </div>     
+                    <div class="my-auto col-md-2">
+                        <a class="btn btn-success" href="{% url 'productview' item.product.category.slug item.product.slug %}"><i class="fa fa-eye mr-2"></i>View product</a>
+                    </div>                
+                    <div class="my-auto  col-md-2 ">                                                                
+                        <button type='button' class="btn btn-danger remove-wishlist-item mt-1">Remove<i class="fa-solid fa-trash-can ml-2"></i></button>
+                    </div>
+                </div><hr class="p-0 m-0"> 
+               {% endfor %}
+
+               {% else %}
+                    <h4 class="text-center">Oops...No Items in Wishlist.</h4>
+               {% endif %}
+            </div>         
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

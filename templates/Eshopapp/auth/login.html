@@ -1,0 +1,31 @@
+{% extends 'Eshopapp/base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="container shadow-lg p-3 mb-5 bg-dark rounded col-md-5 my-5 text-white"> 
+    <h3 class="text-center">Login</h3><hr class="bg-light">
+   
+    {% if form.non_field_errors %}
+      {% for error  in form.non_fields_errors %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          {{error}}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <form action="" method="post" novalidate>
+        {% csrf_token %}        
+
+        {% for fields in form %}        
+        <div class="row p-3">
+          {{ fields.label_tag }}{{ fields }} <span class="text-danger">{{fields.errors|striptags }}</span>
+        </div>
+      {% endfor %}
+      <input type="submit" value="Login" class="btn btn-success col-sm-3" />
+      <span class="ml-3">Did't Registered?<a class="text-info ml-1" href="{% url 'user_registration' %} ">Register here</a></span>
+    </form>
+  </div>
+{% endblock %}
