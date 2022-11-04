@@ -46,3 +46,10 @@ def productlist(request):
     listofproduct = list(products)
 
     return JsonResponse(listofproduct, safe=False)
+
+def about_us(request):
+    return render(request,'Eshopapp/about_us.html')
+
+
+def contact_us(request):
+    return render(request,'Eshopapp/contact_us.html')

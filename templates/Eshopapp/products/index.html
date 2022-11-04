@@ -6,11 +6,11 @@
 {% endblock msg%}
 
 {% block content %}
-<div class="py-1 bg-info">
+<div class="py-1 bredcrum-bg">
 
   <div class="container">
-    <a class="text-white" href=" {% url 'home' %} ">Home /</a>
-    <a class="text-white" href=" {% url 'collections' %} ">Collections /</a>
+    <a class="text-white" href=" {% url 'home' %} ">Home |</a>
+    <a class="text-white" href=" {% url 'collections' %} ">Collections |</a>
     <a class="text-white" href=" {% url 'collectionsview' category.slug %} ">{{category.name}}</a>
   </div>
 </div>

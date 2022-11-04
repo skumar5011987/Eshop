@@ -1,0 +1,17 @@
+{% extends 'Eshopapp/base.html' %}
+{% load static %}
+{% block msg %}
+
+{% endblock msg%}
+
+{% block content %}
+<div class="py-1 bredcrum-bg">
+  <div class="container">
+    <a class="text-white" href=" {% url 'home' %} ">Home |</a>
+    <a class="text-white" href=" {% url 'about_us' %} ">About </a>
+     </div>
+</div>
+<div class="container">
+    <h2 class="text-center my-4">About Us</h2>
+</div>
+{% endblock content %}
